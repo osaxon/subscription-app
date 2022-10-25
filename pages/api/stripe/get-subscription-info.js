@@ -1,4 +1,5 @@
 import { getSession } from "next-auth/react";
+import { prisma } from "../../../prisma/shared-client";
 
 import Stripe from "stripe";
 
@@ -16,7 +17,17 @@ export const handler = async (req, res) => {
 		});
 	}
 
-	res.end();
+	const subscription = await stripe.subscriptions.retrieve(
+		session?.user.stripeSubId
+	);
+
+	if (!subscription) {
+		return res
+			.status(500)
+			.json({ message: "could not retrieve subscription" });
+	}
+
+	return res.status(200).json({ data: subscription });
 };
 
 export default handler;

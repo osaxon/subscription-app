@@ -37,12 +37,13 @@ const handler = async (req, res) => {
 				.status(400)
 				.send(`Webhook signature verification failed.`);
 		}
-
+		console.log(event);
 		// Handle the event
 		switch (event.type) {
 			// Handle successful subscription creation
 			case "customer.subscription.created": {
 				const subscription = event.data.object;
+				console.log(subscription);
 				await prisma.user.update({
 					// Find the customer in our database with the Stripe customer ID linked to this purchase
 					where: {
@@ -50,13 +51,27 @@ const handler = async (req, res) => {
 					},
 					// Update that customer so their status is now active
 					data: {
-						isActive: true,
-						stripeSubId: subscription.items.data[0]?.price.id,
+						stripeSubPriceId: subscription.items.data[0]?.price.id,
+						stripeSubId: subscription.id,
 					},
 				});
 				break;
 			}
-			// ... handle other event types
+
+			case "customer.subscription.deleted": {
+				const subscription = event.data.object;
+				await prisma.user.update({
+					where: {
+						stripeCustomerId: subscription.customer,
+					},
+					// Update that customer so their status is now inactive
+					data: {
+						isActive: false,
+						stripeSubId: subscription.items.data[0]?.price.id,
+					},
+				});
+			}
+
 			default:
 				console.log(`Unhandled event type ${event.type}`);
 		}

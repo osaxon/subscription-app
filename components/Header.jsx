@@ -37,13 +37,23 @@ const Header = () => {
 							className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
 						>
 							<li>
-								<a className="justify-between">Profile</a>
+								<Link
+									href="/dashboard"
+									className="justify-between"
+								>
+									Dashboard
+								</Link>
 							</li>
 							<li>
-								<a>Settings</a>
+								<Link href="/">Help</Link>
 							</li>
 							<li>
-								<a onClick={() => signOut()}>Logout</a>
+								<button
+									className="btn btn-primary btn-sm"
+									onClick={() => signOut()}
+								>
+									Logout
+								</button>
 							</li>
 						</ul>
 					</div>

@@ -35,8 +35,11 @@ CREATE TABLE "User" (
     "emailVerified" TIMESTAMP(3),
     "image" TEXT,
     "stripeCustomerId" TEXT,
-    "isActive" BOOLEAN NOT NULL DEFAULT false,
+    "stripeSubStatus" TEXT,
+    "stripeSubPriceId" TEXT,
     "stripeSubId" TEXT,
+    "stripeSubTrialStart" BIGINT,
+    "stripeSubTrialEnd" BIGINT,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );

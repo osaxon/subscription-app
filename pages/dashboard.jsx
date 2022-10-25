@@ -4,12 +4,20 @@ import { useRouter } from "next/router";
 import Layout from "../components/Layout";
 import Image from "next/future/image";
 import AlertWarn from "../components/AlertWarn";
+import useSWR from "swr";
+import axios from "axios";
+
+const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 const Dashboard = ({ session }) => {
-	const { data, status } = useSession({ required: true });
+	const { status } = useSession({ required: true });
 	const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
+	const { data, error } = useSWR(
+		"/api/stripe/get-subscription-info",
+		fetcher
+	);
 	const activeSubscription = session.user.isActive;
-	console.log(session);
+	console.log(data);
 
 	const goToCheckout = async () => {
 		setIsCheckoutLoading(true);
@@ -31,18 +39,15 @@ const Dashboard = ({ session }) => {
 	if (status === "authenticated") {
 		return (
 			<Layout>
-				<main className="layout border">
-					{!activeSubscription && (
-						<AlertWarn
-							onClick={() => goToCheckout()}
-							message="You must provide payment to complete your account"
-						/>
-					)}
+				<main className="layout">
 					<p className="lg:text-6xl text-4xl">
 						Welcome, {session.user.name}
 					</p>
 					{/* Account details */}
-					<section className="border h-screen"></section>
+					<section className="h-screen">
+						{error && <div>Failed to load</div>}
+						{!data && <div>Loading...</div>}
+					</section>
 				</main>
 			</Layout>
 		);
