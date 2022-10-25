@@ -45,7 +45,7 @@ model User {
   image            String?
   accounts         Account[]
   sessions         Session[]
-  stripeCustomerId String?
+  stripeCustomerId String?   @unique
   isActive         Boolean   @default(false)
 }
 
