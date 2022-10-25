@@ -34,7 +34,7 @@ export default NextAuth({
 			return session;
 		},
 
-		async redirect({ urel, baseUrl }) {
+		async redirect({ url, baseUrl }) {
 			return `${baseUrl}/dashboard`;
 		},
 	},
