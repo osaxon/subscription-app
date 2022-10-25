@@ -9,6 +9,7 @@ const Dashboard = ({ session }) => {
 	const { data, status } = useSession({ required: true });
 	const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
 	const activeSubscription = session.user.isActive;
+	console.log(session);
 
 	const goToCheckout = async () => {
 		setIsCheckoutLoading(true);

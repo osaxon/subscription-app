@@ -5,5 +5,5 @@ export const getStripeSubTier = (subId) => {
 		(key) => SUBSCRIPTION_IDS[key] === subId
 	);
 
-	return subTier?.split("_")[2];
+	return subTier?.split("_")[1];
 };
