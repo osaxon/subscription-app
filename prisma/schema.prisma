@@ -47,6 +47,7 @@ model User {
   sessions         Session[]
   stripeCustomerId String?   @unique
   isActive         Boolean   @default(false)
+  stripeSubId      String?
 }
 
 model VerificationToken {

@@ -1,7 +1,7 @@
 import { getSession } from "next-auth/react";
 import Stripe from "stripe";
 
-export default async (req, res) => {
+const handler = async (req, res) => {
 	const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 	const session = await getSession({ req });
@@ -24,7 +24,7 @@ export default async (req, res) => {
 				quantity: 1,
 			},
 		],
-		success_url: `http://localhost:3000/?session_id={CHECKOUT_SESSION_ID}`,
+		success_url: `http://localhost:3000/dashboard/?session_id={CHECKOUT_SESSION_ID}`,
 		cancel_url: "http://localhost:3000/?cancelledPayment=true",
 		subscription_data: {
 			metadata: {
@@ -42,3 +42,5 @@ export default async (req, res) => {
 
 	return res.status(200).json({ redirectUrl: checkoutSession.url });
 };
+
+export default handler;

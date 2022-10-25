@@ -2,8 +2,7 @@ import { buffer } from "micro";
 import Stripe from "stripe";
 import { prisma } from "../../../prisma/shared-client";
 
-const endpointSecret =
-	"whsec_2eb3eb451112730449540e3da0a9a3d04fc972ceaec73dcc19f62b8b58580d5b";
+const endpointSecret = process.env.WH_SECRET;
 
 export const config = {
 	api: {
@@ -11,7 +10,7 @@ export const config = {
 	},
 };
 
-export default async (req, res) => {
+const handler = async (req, res) => {
 	try {
 		const requestBuffer = await buffer(req);
 		const sig = req.headers["stripe-signature"];
@@ -68,3 +67,5 @@ export default async (req, res) => {
 		res.status(500).end();
 	}
 };
+
+export default handler;
