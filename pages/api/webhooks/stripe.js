@@ -1,3 +1,4 @@
+import { PrismaClient } from "@prisma/client";
 import { buffer } from "micro";
 import Stripe from "stripe";
 import { prisma } from "../../../prisma/shared-client";
@@ -50,6 +51,7 @@ const handler = async (req, res) => {
 					// Update that customer so their status is now active
 					data: {
 						isActive: true,
+						stripeSubId: subscription.items.data[0]?.price.id,
 					},
 				});
 				break;

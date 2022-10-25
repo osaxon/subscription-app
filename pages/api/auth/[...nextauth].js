@@ -4,6 +4,7 @@ import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { prisma } from "../../../prisma/shared-client";
 import Stripe from "stripe";
+import { getStripeSubTier } from "../../../utils/stripe";
 
 export default NextAuth({
 	providers: [
@@ -20,8 +21,7 @@ export default NextAuth({
 	adapter: PrismaAdapter(prisma),
 	callbacks: {
 		async session({ session, user }) {
-			session.user.id = user.id;
-			session.user.stripeCustomerId = user.stripeCustomerId;
+			const stripeSubTier = getStripeSubTier(user.stripeSubId);
 
 			const dbUser = await prisma.user.findFirst({
 				where: {
@@ -29,6 +29,9 @@ export default NextAuth({
 				},
 			});
 
+			session.user.id = user.id;
+			session.user.stripeCustomerId = user.stripeCustomerId;
+			session.user.stripeSubTier = stripeSubTier;
 			session.user.isActive = dbUser.isActive;
 
 			return session;

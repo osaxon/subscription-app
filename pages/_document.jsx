@@ -14,7 +14,7 @@ class MyDocument extends Document {
 
 	render() {
 		return (
-			<Html data-theme="lofi" lang="en">
+			<Html data-theme="cyberpunk" lang="en">
 				<Head>
 					<link
 						rel="preload"

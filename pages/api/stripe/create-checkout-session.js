@@ -1,5 +1,10 @@
 import { getSession } from "next-auth/react";
 import Stripe from "stripe";
+import {
+	TRIAL_PERIOD_DAYS,
+	YEARLY_DISCOUNT,
+	SUBSCRIPTION_IDS,
+} from "../../../config";
 
 const handler = async (req, res) => {
 	const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -15,22 +20,26 @@ const handler = async (req, res) => {
 		});
 	}
 
+	const subType = req.body.subType;
+	console.log(subType);
+
 	const checkoutSession = await stripe.checkout.sessions.create({
 		mode: "subscription",
 		customer: session.user.stripeCustomerId,
+		metadata: {
+			payingUserId: session.user.id,
+		},
+		subscription_data: {
+			trial_period_days: TRIAL_PERIOD_DAYS,
+		},
 		line_items: [
 			{
-				price: "price_1LwRKoIQP6WsWq07hffsbxDy",
+				price: SUBSCRIPTION_IDS[`STRIPE_${subType}_SUB_ID`],
 				quantity: 1,
 			},
 		],
-		success_url: `http://localhost:3000/dashboard/?session_id={CHECKOUT_SESSION_ID}`,
-		cancel_url: "http://localhost:3000/?cancelledPayment=true",
-		subscription_data: {
-			metadata: {
-				payingUserId: session.user.id,
-			},
-		},
+		success_url: `${req.headers.origin}/dashboard/?session_id={CHECKOUT_SESSION_ID}`,
+		cancel_url: `${req.headers.origin}/dashboard/?cancelledPayment=true`,
 	});
 
 	if (!checkoutSession.url) {
