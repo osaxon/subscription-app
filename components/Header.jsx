@@ -7,7 +7,7 @@ const Header = () => {
 	const { data: session, status } = useSession();
 
 	return (
-		<div className=" flex items-center min-h-16 bg-base-100 layout p-0">
+		<div className="navbar bg-base-100">
 			<div className="flex-1">
 				<Link href="/">
 					<a className="btn btn-ghost normal-case text-xl px-0">

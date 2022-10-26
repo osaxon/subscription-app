@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSession, signOut, getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Layout from "../components/Layout";
@@ -7,17 +7,28 @@ import AlertWarn from "../components/AlertWarn";
 import useSWR from "swr";
 import axios from "axios";
 
+import Welcome from "../components/Welcome";
+import UserLessonPlans from "../components/UserLessonPlans";
+
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 const Dashboard = ({ session }) => {
 	const { status } = useSession({ required: true });
 	const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
-	const { data, error } = useSWR(
+	const { data, error, isValidating } = useSWR(
 		"/api/stripe/get-subscription-info",
 		fetcher
 	);
+	const router = useRouter();
 	const activeSubscription = session.user.isActive;
-	console.log(data);
+	const [stageContent, setStageContent] = useState("welcome");
+
+	const handleStageChange = (e, selected) => {
+		e.preventDefault();
+		setStageContent(selected);
+	};
+
+	console.log(isValidating);
 
 	const goToCheckout = async () => {
 		setIsCheckoutLoading(true);
@@ -39,14 +50,65 @@ const Dashboard = ({ session }) => {
 	if (status === "authenticated") {
 		return (
 			<Layout>
-				<main className="layout">
-					<p className="lg:text-6xl text-4xl">
-						Welcome, {session.user.name}
-					</p>
+				<main className="">
 					{/* Account details */}
 					<section className="h-screen">
-						{error && <div>Failed to load</div>}
-						{!data && <div>Loading...</div>}
+						{data ? (
+							<div className="drawer drawer-mobile">
+								<input
+									id="my-drawer-2"
+									type="checkbox"
+									className="drawer-toggle"
+								/>
+								<div className="drawer-content flex flex-col items-center justify-center">
+									{stageContent === "welcome" && (
+										<Welcome name={session.user.name} />
+									)}
+									{stageContent === "lesson-plans" && (
+										<UserLessonPlans />
+									)}
+
+									<label
+										htmlFor="my-drawer-2"
+										className="btn btn-primary drawer-button lg:hidden"
+									>
+										Open drawer
+									</label>
+								</div>
+								<div className="drawer-side">
+									<label
+										htmlFor="my-drawer-2"
+										className="drawer-overlay"
+									></label>
+									<ul className="menu p-4 overflow-y-auto w-80 bg-base-100 text-base-content">
+										<li>
+											<a
+												onClick={(e) =>
+													handleStageChange(
+														e,
+														"welcome"
+													)
+												}
+											>
+												Overview
+											</a>
+										</li>
+										<li>
+											<a
+												onClick={(e) =>
+													handleStageChange(
+														e,
+														"lesson-plans"
+													)
+												}
+											>
+												My Lesson Plans
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						) : null}
 					</section>
 				</main>
 			</Layout>
