@@ -10,3 +10,4 @@ export const SUBSCRIPTION_IDS = {
 	STRIPE_YEARLY_SUB_ID: process.env.STRIPE_YEARLY_SUB_ID,
 	STRIPE_MONTHLY_SUB_ID: process.env.STRIPE_MONTHLY_SUB_ID,
 };
+export const DASHBOARD_MENU = ["Overview", "My Lesson Plans"];

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useSession, signOut, getSession } from "next-auth/react";
 import Layout from "../components/Layout";
-
+import { DASHBOARD_MENU } from "../config";
 import axios from "axios";
 import useAppState from "../store/state";
 import { Welcome, UserLessonPlans, MenuItem } from "../components";
-
+import Link from "next/link";
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 const Dashboard = ({ session }) => {
@@ -51,10 +51,10 @@ const Dashboard = ({ session }) => {
 								className="drawer-toggle"
 							/>
 							<div className="drawer-content flex flex-col items-center justify-center">
-								{contentStage === "welcome" && (
+								{contentStage === "Overview" && (
 									<Welcome user={session.user} />
 								)}
-								{contentStage === "lesson-plans" && (
+								{contentStage === "My Lesson Plans" && (
 									<UserLessonPlans />
 								)}
 
@@ -71,24 +71,21 @@ const Dashboard = ({ session }) => {
 									className="drawer-overlay"
 								></label>
 								<ul className="menu overflow-y-auto w-80 bg-base-100 text-base-content">
-									<MenuItem
-										label="Overview"
-										onClick={() =>
-											handleStageChange("welcome")
-										}
-										stage="welcome"
-										selected={contentStage === "welcome"}
-									/>
-									<MenuItem
-										label="My Lesson Plans"
-										onClick={() =>
-											handleStageChange("lesson-plans")
-										}
-										stage="lesson-plans"
-										selected={
-											contentStage === "lesson-plans"
-										}
-									/>
+									{DASHBOARD_MENU.length > 0 &&
+										DASHBOARD_MENU.map((item) => (
+											<MenuItem
+												key={item}
+												label={item}
+												onClick={() =>
+													handleStageChange(item)
+												}
+												stage={item}
+												selected={contentStage === item}
+											/>
+										))}
+									<li>
+										<Link href="/plans">All Plans</Link>
+									</li>
 								</ul>
 							</div>
 						</div>

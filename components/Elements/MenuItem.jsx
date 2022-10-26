@@ -7,9 +7,7 @@ const MenuItem = ({ stage, onClick, label, selected }) => {
 			key={label}
 			className={clsxm(selected && ["border-l-4 border-primary"])}
 		>
-			<a className="" onClick={onClick}>
-				{label}
-			</a>
+			<a onClick={onClick}>{label}</a>
 		</li>
 	);
 };
