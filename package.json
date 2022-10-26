@@ -31,6 +31,7 @@
     "eslint-config-next": "12.3.1",
     "postcss": "^8.4.18",
     "prisma": "^4.5.0",
+    "react-json-formatter": "^0.3.2",
     "tailwindcss": "^3.2.1"
   }
 }

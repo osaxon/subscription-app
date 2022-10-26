@@ -64,7 +64,7 @@ const Dashboard = ({ session }) => {
 								/>
 								<div className="drawer-content flex flex-col items-center justify-center">
 									{contentStage === "welcome" && (
-										<Welcome name={session.user.name} />
+										<Welcome user={session.user} />
 									)}
 									{contentStage === "lesson-plans" && (
 										<UserLessonPlans />

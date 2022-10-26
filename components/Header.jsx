@@ -1,6 +1,6 @@
 import React from "react";
 import { useSession, signOut, signIn } from "next-auth/react";
-import Image from "next/image";
+import Image from "next/future/image";
 import Link from "next/link";
 
 const Header = () => {
@@ -10,7 +10,7 @@ const Header = () => {
 		<div className="navbar bg-base-100 w-11/12 mx-auto">
 			<div className="flex-1">
 				<Link href="/">
-					<a className="btn btn-ghost normal-case text-xl px-0">
+					<a className="btn btn-ghost normal-case text-primary hover:text-primary-focus text-2xl px-0">
 						WebJenga.
 					</a>
 				</Link>
@@ -22,15 +22,13 @@ const Header = () => {
 							tabIndex={0}
 							className="btn btn-ghost btn-circle avatar"
 						>
-							<div className="w-10 rounded-full">
-								<Image
-									alt="Your avatar"
-									src={session.user.image}
-									width={40}
-									height={40}
-									className="rounded-full"
-								/>
-							</div>
+							<Image
+								alt="Your avatar"
+								src={session.user.image}
+								width={40}
+								height={40}
+								className="rounded-full"
+							/>
 						</label>
 						<ul
 							tabIndex={0}
