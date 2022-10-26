@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSession, signOut, getSession } from "next-auth/react";
-import { useRouter } from "next/router";
 import Layout from "../components/Layout";
-import Image from "next/future/image";
-import AlertWarn from "../components/AlertWarn";
-import useSWR from "swr";
+
 import axios from "axios";
 import useAppState from "../store/state";
 import { Welcome, UserLessonPlans, MenuItem } from "../components";
@@ -14,13 +11,7 @@ const fetcher = (url) => axios.get(url).then((res) => res.data);
 const Dashboard = ({ session }) => {
 	const { status } = useSession({ required: true });
 	const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
-	const { data, error, isValidating } = useSWR(
-		"/api/stripe/get-subscription-info",
-		fetcher
-	);
 
-	const router = useRouter();
-	const activeSubscription = session.user.isActive;
 	const { contentStage, setContentStage } = useAppState((state) => ({
 		contentStage: state.contentStage,
 		setContentStage: state.setContentStage,
@@ -29,8 +20,6 @@ const Dashboard = ({ session }) => {
 	const handleStageChange = (selected) => {
 		setContentStage(selected);
 	};
-
-	console.log(isValidating);
 
 	const goToCheckout = async () => {
 		setIsCheckoutLoading(true);

@@ -63,10 +63,11 @@ const handler = async (req, res) => {
 					where: {
 						stripeCustomerId: subscription.customer,
 					},
-					// Update that customer so their status is now inactive
+					// Remove Stripe sub details from customer
 					data: {
-						isActive: false,
-						stripeSubId: subscription.items.data[0]?.price.id,
+						stripeSubPlan: null,
+						stripeSubId: null,
+						stripeSubPriceId: null,
 					},
 				});
 			}
