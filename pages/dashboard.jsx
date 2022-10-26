@@ -6,9 +6,8 @@ import Image from "next/future/image";
 import AlertWarn from "../components/AlertWarn";
 import useSWR from "swr";
 import axios from "axios";
-
-import Welcome from "../components/Welcome";
-import UserLessonPlans from "../components/UserLessonPlans";
+import useAppState from "../store/state";
+import { Welcome, UserLessonPlans, MenuItem } from "../components";
 
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
@@ -19,13 +18,16 @@ const Dashboard = ({ session }) => {
 		"/api/stripe/get-subscription-info",
 		fetcher
 	);
+
 	const router = useRouter();
 	const activeSubscription = session.user.isActive;
-	const [stageContent, setStageContent] = useState("welcome");
+	const { contentStage, setContentStage } = useAppState((state) => ({
+		contentStage: state.contentStage,
+		setContentStage: state.setContentStage,
+	}));
 
-	const handleStageChange = (e, selected) => {
-		e.preventDefault();
-		setStageContent(selected);
+	const handleStageChange = (selected) => {
+		setContentStage(selected);
 	};
 
 	console.log(isValidating);
@@ -52,19 +54,19 @@ const Dashboard = ({ session }) => {
 			<Layout>
 				<main className="">
 					{/* Account details */}
-					<section className="h-screen">
+					<section className="h-screen border">
 						{data ? (
-							<div className="drawer drawer-mobile">
+							<div className="drawer border drawer-mobile">
 								<input
 									id="my-drawer-2"
 									type="checkbox"
 									className="drawer-toggle"
 								/>
 								<div className="drawer-content flex flex-col items-center justify-center">
-									{stageContent === "welcome" && (
+									{contentStage === "welcome" && (
 										<Welcome name={session.user.name} />
 									)}
-									{stageContent === "lesson-plans" && (
+									{contentStage === "lesson-plans" && (
 										<UserLessonPlans />
 									)}
 
@@ -75,36 +77,28 @@ const Dashboard = ({ session }) => {
 										Open drawer
 									</label>
 								</div>
-								<div className="drawer-side">
+								<div className="drawer-side border">
 									<label
 										htmlFor="my-drawer-2"
 										className="drawer-overlay"
 									></label>
-									<ul className="menu p-4 overflow-y-auto w-80 bg-base-100 text-base-content">
-										<li>
-											<a
-												onClick={(e) =>
-													handleStageChange(
-														e,
-														"welcome"
-													)
-												}
-											>
-												Overview
-											</a>
-										</li>
-										<li>
-											<a
-												onClick={(e) =>
-													handleStageChange(
-														e,
-														"lesson-plans"
-													)
-												}
-											>
-												My Lesson Plans
-											</a>
-										</li>
+									<ul className="menu border overflow-y-auto w-80 bg-base-100 text-base-content">
+										<MenuItem
+											label="Overview"
+											onClick={() =>
+												handleStageChange("welcome")
+											}
+											stage="welcome"
+										/>
+										<MenuItem
+											label="My Lesson Plans"
+											onClick={() =>
+												handleStageChange(
+													"lesson-plans"
+												)
+											}
+											stage="lesson-plans"
+										/>
 									</ul>
 								</div>
 							</div>
