@@ -24,7 +24,7 @@ const Welcome = ({ user }) => {
 				<div className="border-accent border p-2">
 					<p>Subscription status: {activeSub}</p>
 					<p>
-						Plan: {data.stripeSubTier ? data.stripeSubTier : "NONE"}
+						Plan: {data.stripeSubPlan ? data.stripeSubPlan : "NONE"}
 					</p>
 					<Link href="/sub-options">
 						<button className="btn">Update</button>

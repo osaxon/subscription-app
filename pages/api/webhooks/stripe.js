@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { buffer } from "micro";
 import Stripe from "stripe";
 import { prisma } from "../../../prisma/shared-client";
+import { getStripeSubTier } from "../../../utils/stripe";
 
 const endpointSecret = process.env.WH_SECRET;
 
@@ -43,7 +44,10 @@ const handler = async (req, res) => {
 			// Handle successful subscription creation
 			case "customer.subscription.created": {
 				const subscription = event.data.object;
-				console.log(subscription);
+				const stripeSubTier = getStripeSubTier(
+					subscription.items.data[0]?.price.id
+				);
+
 				await prisma.user.update({
 					// Find the customer in our database with the Stripe customer ID linked to this purchase
 					where: {
@@ -52,6 +56,27 @@ const handler = async (req, res) => {
 					data: {
 						stripeSubPriceId: subscription.items.data[0]?.price.id,
 						stripeSubId: subscription.id,
+						stripeSubPlan: stripeSubTier,
+					},
+				});
+				break;
+			}
+
+			case "customer.subscription.updated": {
+				const subscription = event.data.object;
+				const stripeSubTier = getStripeSubTier(
+					subscription.items.data[0]?.price.id
+				);
+
+				await prisma.user.update({
+					// Find the customer in our database with the Stripe customer ID linked to this purchase
+					where: {
+						stripeCustomerId: subscription.customer,
+					},
+					data: {
+						stripeSubPriceId: subscription.items.data[0]?.price.id,
+						stripeSubId: subscription.id,
+						stripeSubPlan: stripeSubTier,
 					},
 				});
 				break;
