@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import JsonFormatter from "react-json-formatter";
 const jsonStyle = {
 	propertyStyle: { color: "red" },
@@ -17,8 +18,14 @@ const Welcome = ({ user }) => {
 				<div className="border-accent border p-2">
 					<p>Subscription status: {activeSub}</p>
 					<p>Plan: {user.stripeSubTier}</p>
-					<button className="btn">Update</button>
-					<button className="btn btn-error">Cancel</button>
+					<Link href="/sub-options">
+						<button className="btn">Update</button>
+					</Link>
+					{activeSub === "Active" ? (
+						<Link href="/sub-options">
+							<button className="btn">Update</button>
+						</Link>
+					) : null}
 				</div>
 			</div>
 		</section>

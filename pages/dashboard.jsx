@@ -55,60 +55,54 @@ const Dashboard = ({ session }) => {
 				<main className="">
 					{/* Account details */}
 					<section className="h-screen">
-						{data ? (
-							<div className="drawer drawer-mobile">
-								<input
-									id="my-drawer-2"
-									type="checkbox"
-									className="drawer-toggle"
-								/>
-								<div className="drawer-content flex flex-col items-center justify-center">
-									{contentStage === "welcome" && (
-										<Welcome user={session.user} />
-									)}
-									{contentStage === "lesson-plans" && (
-										<UserLessonPlans />
-									)}
+						<div className="drawer drawer-mobile">
+							<input
+								id="my-drawer-2"
+								type="checkbox"
+								className="drawer-toggle"
+							/>
+							<div className="drawer-content flex flex-col items-center justify-center">
+								{contentStage === "welcome" && (
+									<Welcome user={session.user} />
+								)}
+								{contentStage === "lesson-plans" && (
+									<UserLessonPlans />
+								)}
 
-									<label
-										htmlFor="my-drawer-2"
-										className="btn btn-primary drawer-button lg:hidden"
-									>
-										Open drawer
-									</label>
-								</div>
-								<div className="drawer-side">
-									<label
-										htmlFor="my-drawer-2"
-										className="drawer-overlay"
-									></label>
-									<ul className="menu overflow-y-auto w-80 bg-base-100 text-base-content">
-										<MenuItem
-											label="Overview"
-											onClick={() =>
-												handleStageChange("welcome")
-											}
-											stage="welcome"
-											selected={
-												contentStage === "welcome"
-											}
-										/>
-										<MenuItem
-											label="My Lesson Plans"
-											onClick={() =>
-												handleStageChange(
-													"lesson-plans"
-												)
-											}
-											stage="lesson-plans"
-											selected={
-												contentStage === "lesson-plans"
-											}
-										/>
-									</ul>
-								</div>
+								<label
+									htmlFor="my-drawer-2"
+									className="btn btn-primary drawer-button lg:hidden"
+								>
+									Open drawer
+								</label>
 							</div>
-						) : null}
+							<div className="drawer-side">
+								<label
+									htmlFor="my-drawer-2"
+									className="drawer-overlay"
+								></label>
+								<ul className="menu overflow-y-auto w-80 bg-base-100 text-base-content">
+									<MenuItem
+										label="Overview"
+										onClick={() =>
+											handleStageChange("welcome")
+										}
+										stage="welcome"
+										selected={contentStage === "welcome"}
+									/>
+									<MenuItem
+										label="My Lesson Plans"
+										onClick={() =>
+											handleStageChange("lesson-plans")
+										}
+										stage="lesson-plans"
+										selected={
+											contentStage === "lesson-plans"
+										}
+									/>
+								</ul>
+							</div>
+						</div>
 					</section>
 				</main>
 			</Layout>

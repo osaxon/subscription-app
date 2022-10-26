@@ -40,6 +40,7 @@ CREATE TABLE "User" (
     "stripeSubId" TEXT,
     "stripeSubTrialStart" BIGINT,
     "stripeSubTrialEnd" BIGINT,
+    "stripeSubPlan" TEXT,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );

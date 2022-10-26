@@ -49,7 +49,6 @@ const handler = async (req, res) => {
 					where: {
 						stripeCustomerId: subscription.customer,
 					},
-					// Update that customer so their status is now active
 					data: {
 						stripeSubPriceId: subscription.items.data[0]?.price.id,
 						stripeSubId: subscription.id,
