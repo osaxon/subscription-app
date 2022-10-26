@@ -54,9 +54,9 @@ const Dashboard = ({ session }) => {
 			<Layout>
 				<main className="">
 					{/* Account details */}
-					<section className="h-screen border">
+					<section className="h-screen">
 						{data ? (
-							<div className="drawer border drawer-mobile">
+							<div className="drawer drawer-mobile">
 								<input
 									id="my-drawer-2"
 									type="checkbox"
@@ -77,18 +77,21 @@ const Dashboard = ({ session }) => {
 										Open drawer
 									</label>
 								</div>
-								<div className="drawer-side border">
+								<div className="drawer-side">
 									<label
 										htmlFor="my-drawer-2"
 										className="drawer-overlay"
 									></label>
-									<ul className="menu border overflow-y-auto w-80 bg-base-100 text-base-content">
+									<ul className="menu overflow-y-auto w-80 bg-base-100 text-base-content">
 										<MenuItem
 											label="Overview"
 											onClick={() =>
 												handleStageChange("welcome")
 											}
 											stage="welcome"
+											selected={
+												contentStage === "welcome"
+											}
 										/>
 										<MenuItem
 											label="My Lesson Plans"
@@ -98,6 +101,9 @@ const Dashboard = ({ session }) => {
 												)
 											}
 											stage="lesson-plans"
+											selected={
+												contentStage === "lesson-plans"
+											}
 										/>
 									</ul>
 								</div>
