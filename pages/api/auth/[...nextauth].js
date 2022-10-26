@@ -21,7 +21,7 @@ export default NextAuth({
 	adapter: PrismaAdapter(prisma),
 	callbacks: {
 		async session({ session, user }) {
-			const stripeSubTier = getStripeSubTier(user.stripeSubId);
+			const stripeSubTier = getStripeSubTier(user.stripeSubPriceId);
 
 			const dbUser = await prisma.user.findFirst({
 				where: {
@@ -29,9 +29,12 @@ export default NextAuth({
 				},
 			});
 
+			console.log(user);
+
 			session.user.id = user.id;
 			session.user.stripeCustomerId = user.stripeCustomerId;
 			session.user.stripeSubTier = stripeSubTier;
+			session.user.stripeSubPriceId = dbUser.stripeSubPriceId;
 			session.user.stripeSubId = dbUser.stripeSubId;
 
 			return session;
