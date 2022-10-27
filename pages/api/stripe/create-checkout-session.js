@@ -19,6 +19,18 @@ const handler = async (req, res) => {
 			},
 		});
 	}
+	console.log("USER SESSION>>>>>>>>>");
+	console.log(session.user.stripeSubPriceId);
+
+	const userCurrentSub = session.user.stripeSubPriceId;
+
+	// Check for current subscriptions
+	if (userCurrentSub) {
+		return res.status(409).json({
+			message:
+				"This account has an active subscription already. Please update or cancel.",
+		});
+	}
 
 	const subType = req.body.subType;
 	console.log(subType);

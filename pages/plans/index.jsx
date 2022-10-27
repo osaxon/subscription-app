@@ -63,6 +63,25 @@ const Plans = ({ plans, tags }) => {
 		<Layout>
 			<main className="w-11/12 mx-auto px-2">
 				<p className="text-2xl">All plans</p>
+				<ul className="flex flex-wrap gap-2">
+					{tags.length > 0 &&
+						tags.map((tag) => (
+							<li key={tag}>
+								<button
+									aria-disabled={checkSelectedTag(tag)}
+									onClick={(e) => handleClick(e)}
+									className="btn btn-secondary btn-sm"
+								>
+									{tag}
+								</button>
+							</li>
+						))}
+				</ul>
+				<ul className="mt-12 grid gap-1 md:grid-cols-2 xl:grid-cols-3">
+					{filteredPlans.map((plan) => (
+						<li key={plan.slug}></li>
+					))}
+				</ul>
 			</main>
 		</Layout>
 	);

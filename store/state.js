@@ -1,11 +1,11 @@
 import create from "zustand";
 
 const init = {
-	contentStage: "welcome",
+	contentStage: "Overview",
 };
 
 const useAppState = create((set) => ({
-	contentStage: "welcome",
+	contentStage: "Overview",
 	setContentStage: (stage) => set((state) => ({ contentStage: stage })),
 
 	resetStage: () => set(...init),

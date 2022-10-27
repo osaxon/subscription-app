@@ -38,7 +38,6 @@ const handler = async (req, res) => {
 				.status(400)
 				.send(`Webhook signature verification failed.`);
 		}
-		console.log(event);
 		// Handle the event
 		switch (event.type) {
 			// Handle successful subscription creation
