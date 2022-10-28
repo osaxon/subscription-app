@@ -35,8 +35,6 @@ export default NextAuth({
 			session.user.id = user.id;
 			session.user.stripeCustomerId = user.stripeCustomerId;
 			session.user.stripeSubTier = stripeSubTier;
-			session.user.stripeSubPriceId = dbUser.stripeSubPriceId;
-			session.user.stripeSubId = dbUser.stripeSubId;
 
 			return session;
 		},

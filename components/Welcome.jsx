@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 import useSWR from "swr";
@@ -11,6 +11,8 @@ const Welcome = ({ user }) => {
 		fetcher
 	);
 
+	console.log(user);
+
 	const [cancelSelected, setCancelSelected] = useState(false);
 
 	const handleCancel = (e) => {
@@ -22,15 +24,20 @@ const Welcome = ({ user }) => {
 	if (error) return <div>there has been an error...</div>;
 	if (isValidating) return <div>loading...</div>;
 
-	const activeSub = data.stripeSubId !== null ? "ACTIVE" : "INACTIVE";
+	// const activeSub = data.stripeSubId !== null ? "ACTIVE" : "INACTIVE";
 
 	return (
 		<section className="w-11/12 px-2 mx-auto h-full max-w-6xl">
-			<p className="lg:text-5xl text-3xl">Welcome, {data.name}</p>
+			<p className="lg:text-5xl text-3xl">Welcome, </p>
 
 			<div className="grid md:grid-cols-2 grid-cols-1">
 				<div className="py-2">
-					<p>Subscription status: {activeSub}</p>
+					<p>
+						Subscription status:
+						<span className="uppercase">
+							&nbsp;{data.stripeSubscription.status}
+						</span>
+					</p>
 					<p>
 						Plan: {data.stripeSubPlan ? data.stripeSubPlan : "NONE"}
 					</p>
@@ -38,7 +45,7 @@ const Welcome = ({ user }) => {
 						<Link href="/sub-options">
 							<button className="btn btn-sm">Update</button>
 						</Link>
-						{activeSub === "ACTIVE" && !cancelSelected ? (
+						{/* {activeSub === "ACTIVE" && !cancelSelected ? (
 							<button
 								onClick={(e) => handleCancel(e)}
 								className="btn btn-error btn-sm"
@@ -53,7 +60,7 @@ const Welcome = ({ user }) => {
 							>
 								Cancel at Stripe
 							</a>
-						) : null}
+						) : null} */}
 					</div>
 				</div>
 			</div>

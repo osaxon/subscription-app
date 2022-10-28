@@ -20,6 +20,8 @@ const Dashboard = ({ session }) => {
 		setContentStage(selected);
 	};
 
+	console.log(session);
+
 	if (status === "authenticated") {
 		return (
 			<Layout>

@@ -22,13 +22,15 @@ const Header = () => {
 							tabIndex={0}
 							className="btn btn-ghost btn-circle avatar"
 						>
-							<Image
-								alt="Your avatar"
-								src={session.user.image}
-								width={40}
-								height={40}
-								className="rounded-full"
-							/>
+							<div className="w-24 mask mask-hexagon">
+								<Image
+									alt="Your avatar"
+									src={session.user.image}
+									width={40}
+									height={40}
+									className="rounded-full"
+								/>
+							</div>
 						</label>
 						<ul
 							tabIndex={0}

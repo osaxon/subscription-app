@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import Layout from "../components/Layout";
-import { useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import { PRODUCTS } from "../config";
 import ProductCard from "../components/ProductCard";
+import { prisma } from "../prisma/shared-client";
 
-const SubOptions = () => {
-	const { data: session } = useSession();
-
+const SubOptions = ({ user, session = true }) => {
 	const checkCurrentSub = (priceId) => {
-		return priceId === session.user.stripeSubPriceId;
+		return priceId === user.stripeSubscription.plan.id;
 	};
 
 	if (!session) {
@@ -40,5 +39,27 @@ const SubOptions = () => {
 		</Layout>
 	);
 };
+
+export async function getServerSideProps(context) {
+	const session = await getSession(context);
+
+	if (!session) {
+		return {
+			redirect: {
+				destination: "/login",
+			},
+		};
+	}
+
+	const user = await prisma.user.findUnique({
+		where: {
+			id: session.user.id,
+		},
+	});
+
+	return {
+		props: { user, session },
+	};
+}
 
 export default SubOptions;
