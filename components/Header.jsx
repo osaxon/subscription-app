@@ -7,7 +7,7 @@ const Header = () => {
 	const { data: session, status } = useSession();
 
 	return (
-		<div className="navbar bg-base-100 w-11/12 mx-auto">
+		<div className="navbar bg-base-100 container">
 			<div className="flex-1">
 				<Link href="/">
 					<a className="btn btn-ghost normal-case text-primary hover:text-primary-focus text-2xl px-0">

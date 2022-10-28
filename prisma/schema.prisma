@@ -52,6 +52,7 @@ model User {
   stripeSubTrialStart BigInt?
   stripeSubTrialEnd   BigInt?
   stripeSubPlan       String?
+  stripeSubscription  Json?
 }
 
 model VerificationToken {

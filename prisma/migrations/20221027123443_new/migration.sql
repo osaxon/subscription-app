@@ -41,6 +41,7 @@ CREATE TABLE "User" (
     "stripeSubTrialStart" BIGINT,
     "stripeSubTrialEnd" BIGINT,
     "stripeSubPlan" TEXT,
+    "stripeSubscription" JSONB,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );

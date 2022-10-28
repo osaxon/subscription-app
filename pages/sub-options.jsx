@@ -6,8 +6,6 @@ import ProductCard from "../components/ProductCard";
 
 const SubOptions = () => {
 	const { data: session } = useSession();
-	console.log(session);
-	console.log(PRODUCTS);
 
 	const checkCurrentSub = (priceId) => {
 		return priceId === session.user.stripeSubPriceId;

@@ -17,6 +17,9 @@ export default NextAuth({
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET,
 		}),
 	],
+	pages: {
+		signIn: "/signin",
+	},
 	secret: process.env.JWT_SECRET,
 	adapter: PrismaAdapter(prisma),
 	callbacks: {
@@ -28,8 +31,6 @@ export default NextAuth({
 					id: user.id,
 				},
 			});
-
-			console.log(user);
 
 			session.user.id = user.id;
 			session.user.stripeCustomerId = user.stripeCustomerId;

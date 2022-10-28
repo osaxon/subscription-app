@@ -56,6 +56,7 @@ const handler = async (req, res) => {
 						stripeSubPriceId: subscription.items.data[0]?.price.id,
 						stripeSubId: subscription.id,
 						stripeSubPlan: stripeSubTier,
+						stripeSubscription: subscription,
 					},
 				});
 				break;

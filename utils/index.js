@@ -1,6 +1,8 @@
 const goToCheckout = async (subType) => {
+	console.log("checkout helper function");
+	console.log(subType.name);
 	const data = {
-		subType: subType,
+		subType: subType.name,
 	};
 	const res = await fetch(`/api/stripe/create-checkout-session`, {
 		method: "POST",

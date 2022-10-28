@@ -12,6 +12,8 @@ export const SUBSCRIPTION_IDS = {
 };
 export const DASHBOARD_MENU = ["Overview", "My Lesson Plans"];
 
+export const PROCESS_STEPS = ["Register", "Choose plan", "Go!"];
+
 export const PRODUCTS = [
 	{
 		name: "MONTHLY",

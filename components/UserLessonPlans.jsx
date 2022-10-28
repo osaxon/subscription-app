@@ -1,7 +1,7 @@
 import React from "react";
 
 const UserLessonPlans = () => {
-	return <div>UserLessonPlans</div>;
+	return <div className="layout">UserLessonPlans</div>;
 };
 
 export default UserLessonPlans;

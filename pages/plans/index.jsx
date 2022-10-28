@@ -79,7 +79,9 @@ const Plans = ({ plans, tags }) => {
 				</ul>
 				<ul className="mt-12 grid gap-1 md:grid-cols-2 xl:grid-cols-3">
 					{filteredPlans.map((plan) => (
-						<li key={plan.slug}></li>
+						<li key={plan.slug}>
+							<p className="h-48">{plan.name}</p>
+						</li>
 					))}
 				</ul>
 			</main>
@@ -93,6 +95,7 @@ export async function getStaticProps() {
 			query Plans {
 				plans {
 					id
+					name
 					tags
 					slug
 				}

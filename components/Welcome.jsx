@@ -25,7 +25,7 @@ const Welcome = ({ user }) => {
 	const activeSub = data.stripeSubId !== null ? "ACTIVE" : "INACTIVE";
 
 	return (
-		<section className="w-11/12 px-2 mx-auto h-full">
+		<section className="w-11/12 px-2 mx-auto h-full max-w-6xl">
 			<p className="lg:text-5xl text-3xl">Welcome, {data.name}</p>
 
 			<div className="grid md:grid-cols-2 grid-cols-1">

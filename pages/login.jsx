@@ -1,9 +1,9 @@
 import React from "react";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn, signOut, getProviders } from "next-auth/react";
 import Image from "next/future/image";
 import Layout from "../components/Layout";
 
-const Login = () => {
+const Login = ({ providers }) => {
 	const { data: session } = useSession();
 
 	if (session) {
@@ -26,18 +26,37 @@ const Login = () => {
 		return (
 			<Layout>
 				<div className="layout h-screen flex flex-col justify-center items-center content-center">
-					<p>You&apos;re not signed in</p>
-					<p>Please sign in</p>
-					<button
-						onClick={() => signIn()}
-						className="btn btn-primary btn-wide"
-					>
-						Sign in
-					</button>
+					<div className="flex flex-col items-center gap-4">
+						{Object.values(providers).map((provider) => (
+							<div key={provider.name}>
+								<button
+									className="link"
+									onClick={() =>
+										signIn(
+											provider.id,
+											{
+												callbackUrl: `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/dashboard`,
+											},
+											{ prompt: "login" }
+										)
+									}
+								>
+									Sign in with {provider.name}
+								</button>
+							</div>
+						))}
+					</div>
 				</div>
 			</Layout>
 		);
 	}
 };
+
+export async function getServerSideProps(context) {
+	const providers = await getProviders();
+	return {
+		props: { providers },
+	};
+}
 
 export default Login;

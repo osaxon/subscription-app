@@ -2,7 +2,6 @@ import React from "react";
 import { goToCheckout } from "../utils";
 
 const ProductCard = ({ badge, name, highlights, disabled, price, per }) => {
-	console.log(disabled);
 	return (
 		<div className="w-full bg-base-100 shadow-xl">
 			<div className="h-48 flex flex-col justify-evenly items-center">

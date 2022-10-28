@@ -1,16 +1,15 @@
 import React, { useState } from "react";
-import { useSession, signOut, getSession } from "next-auth/react";
+import { useSession, getSession } from "next-auth/react";
 import Layout from "../components/Layout";
 import { DASHBOARD_MENU } from "../config";
-import axios from "axios";
 import useAppState from "../store/state";
 import { Welcome, UserLessonPlans, MenuItem } from "../components";
 import Link from "next/link";
-const fetcher = (url) => axios.get(url).then((res) => res.data);
+import clsxm from "../utils/clsxm";
 
 const Dashboard = ({ session }) => {
 	const { status } = useSession({ required: true });
-	const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
+	const [menuOpen, setMenuOpen] = useState(false);
 
 	const { contentStage, setContentStage } = useAppState((state) => ({
 		contentStage: state.contentStage,
@@ -21,49 +20,39 @@ const Dashboard = ({ session }) => {
 		setContentStage(selected);
 	};
 
-	const goToCheckout = async () => {
-		setIsCheckoutLoading(true);
-		const res = await fetch(`/api/stripe/create-checkout-session`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
-		const { redirectUrl } = await res.json();
-		if (redirectUrl) {
-			window.location.assign(redirectUrl);
-		} else {
-			setIsCheckoutLoading(false);
-			console.log("Error creating checkout session");
-		}
-	};
-
 	if (status === "authenticated") {
 		return (
 			<Layout>
 				<main className="">
 					{/* Account details */}
 					<section className="h-screen">
+						<div className="w-11/12 px-2 mx-auto max-w-6xl">
+							<button
+								onClick={() => setMenuOpen(!menuOpen)}
+								className={clsxm(
+									"btn btn-primary btn-sm btn-outline lg:hidden",
+									[menuOpen && ["hidden"]]
+								)}
+							>
+								:::
+							</button>
+						</div>
+
 						<div className="drawer drawer-mobile">
 							<input
 								id="my-drawer-2"
 								type="checkbox"
 								className="drawer-toggle"
+								checked={menuOpen}
 							/>
-							<div className="drawer-content flex flex-col items-center justify-center">
+
+							<div className="drawer-content flex flex-col py-4">
 								{contentStage === "Overview" && (
 									<Welcome user={session.user} />
 								)}
 								{contentStage === "My Lesson Plans" && (
 									<UserLessonPlans />
 								)}
-
-								<label
-									htmlFor="my-drawer-2"
-									className="btn btn-primary drawer-button lg:hidden"
-								>
-									Open drawer
-								</label>
 							</div>
 							<div className="drawer-side">
 								<label
@@ -76,9 +65,10 @@ const Dashboard = ({ session }) => {
 											<MenuItem
 												key={item}
 												label={item}
-												onClick={() =>
-													handleStageChange(item)
-												}
+												onClick={() => {
+													setMenuOpen(!menuOpen);
+													handleStageChange(item);
+												}}
 												stage={item}
 												selected={contentStage === item}
 											/>
