@@ -17,6 +17,8 @@ const PlanCard = ({ plan, user }) => {
 		tags,
 	} = plan;
 
+	console.log(user);
+
 	return (
 		<div className="h-96 border border-secondary p-4 flex flex-col justify-between shadow relative">
 			<div className=" h-full flex flex-col justify-between">

@@ -88,9 +88,9 @@ const Plans = ({ plans, tags }) => {
 
 	return (
 		<Layout>
-			<main className="w-11/12 mx-auto px-2">
+			<main className="container">
 				<p className="text-2xl">All plans</p>
-				<ul className="flex flex-wrap gap-2">
+				<ul className="flex flex-wrap gap-2 py-2 mt-6 md:w-1/2 w-full">
 					{tags.length > 0 &&
 						tags.map((tag) => (
 							<li key={tag}>
@@ -98,7 +98,7 @@ const Plans = ({ plans, tags }) => {
 									value={tag}
 									aria-disabled={checkSelectedTag(tag)}
 									onClick={(e) => handleClick(e)}
-									className="btn btn-secondary btn-sm"
+									className="badge badge-accent"
 								>
 									{tag}
 								</button>
