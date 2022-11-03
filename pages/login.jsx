@@ -1,15 +1,10 @@
 import React from "react";
 import { useSession, signIn, signOut, getProviders } from "next-auth/react";
-import { useRouter } from "next/router";
 import Image from "next/future/image";
 import Layout from "../components/Layout";
 
 const Login = ({ providers }) => {
 	const { data: session } = useSession();
-	const router = useRouter();
-	console.log(router);
-	const callbackUrl = router.query.from ? router.query.from : "/dashboard";
-	console.log(callbackUrl);
 
 	if (session) {
 		return (
@@ -38,13 +33,7 @@ const Login = ({ providers }) => {
 								<button
 									className="link"
 									onClick={() =>
-										signIn(
-											provider.id,
-											{
-												callbackUrl: `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}${callbackUrl}`,
-											},
-											{ prompt: "login" }
-										)
+										signIn(provider.id, { prompt: "login" })
 									}
 								>
 									Sign in with {provider.name}
