@@ -17,11 +17,24 @@ const SubOptions = ({ user, session = true }) => {
 	return (
 		<Layout>
 			<main className="min-h-screen layout">
-				<p className="text-6xl">Choose your subscription</p>
+				<p className="text-6xl">Select a subscription</p>
 
-				<div className="flex flex-col md:flex-row gap-6 mt-10">
-					{PRODUCTS.length &&
-						PRODUCTS.map((product) => (
+				<div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-10">
+					{PRODUCTS.filter((p) => p.price === 0).map((product) => (
+						<div className="w-full" key={product.priceId}>
+							<ProductCard
+								badge={product.badge}
+								highlights={product.highlights}
+								name={product.name}
+								id={product.priceId}
+								price={product.price}
+								per={product.per}
+								disabled={checkCurrentSub(product.priceId)}
+							/>
+						</div>
+					))}
+					{PRODUCTS &&
+						PRODUCTS.filter((p) => p.price !== 0).map((product) => (
 							<div className="w-full" key={product.priceId}>
 								<ProductCard
 									badge={product.badge}

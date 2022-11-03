@@ -18,7 +18,7 @@ export default NextAuth({
 		}),
 	],
 	pages: {
-		signIn: "/signin",
+		signIn: "/login",
 	},
 	secret: process.env.JWT_SECRET,
 	adapter: PrismaAdapter(prisma),
@@ -44,7 +44,7 @@ export default NextAuth({
 			const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 			await stripe.customers
-				.create({ email: user.email })
+				.create({ email: user.email, name: user.name })
 				.then(async (customer) => {
 					return prisma.user.update({
 						where: { id: user.id },

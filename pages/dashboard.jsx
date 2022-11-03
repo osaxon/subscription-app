@@ -3,9 +3,11 @@ import { useSession, getSession } from "next-auth/react";
 import Layout from "../components/Layout";
 import { DASHBOARD_MENU } from "../config";
 import useAppState from "../store/state";
-import { Welcome, UserLessonPlans, MenuItem } from "../components";
+import { Account, UserLessonPlans, MenuItem } from "../components";
 import Link from "next/link";
 import clsxm from "../utils/clsxm";
+
+// Once a user is logged in they are re-directed here
 
 const Dashboard = ({ session }) => {
 	const { status } = useSession({ required: true });
@@ -20,15 +22,13 @@ const Dashboard = ({ session }) => {
 		setContentStage(selected);
 	};
 
-	console.log(session);
-
 	if (status === "authenticated") {
 		return (
 			<Layout>
-				<main className="">
+				<main>
 					{/* Account details */}
 					<section className="h-screen">
-						<div className="w-11/12 px-2 mx-auto max-w-6xl">
+						<div className="w-11/12 px-2 mx-auto max-w-6xl min-h-[35px]">
 							<button
 								onClick={() => setMenuOpen(!menuOpen)}
 								className={clsxm(
@@ -40,20 +40,22 @@ const Dashboard = ({ session }) => {
 							</button>
 						</div>
 
-						<div className="drawer drawer-mobile">
+						<div className="drawer drawer-mobile z-50">
 							<input
 								id="my-drawer-2"
 								type="checkbox"
 								className="drawer-toggle"
 								checked={menuOpen}
+								readOnly
 							/>
 
 							<div className="drawer-content flex flex-col py-4">
-								{contentStage === "Overview" && (
-									<Welcome user={session.user} />
-								)}
 								{contentStage === "My Lesson Plans" && (
 									<UserLessonPlans />
+								)}
+
+								{contentStage === "Account" && (
+									<Account user={session.user} />
 								)}
 							</div>
 							<div className="drawer-side">
@@ -93,6 +95,7 @@ export default Dashboard;
 export async function getServerSideProps(context) {
 	const session = await getSession(context);
 
+	// Redirect to the login page if user is not logged in
 	if (!session) {
 		return {
 			redirect: {

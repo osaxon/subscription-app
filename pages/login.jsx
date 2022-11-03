@@ -1,10 +1,15 @@
 import React from "react";
 import { useSession, signIn, signOut, getProviders } from "next-auth/react";
+import { useRouter } from "next/router";
 import Image from "next/future/image";
 import Layout from "../components/Layout";
 
 const Login = ({ providers }) => {
 	const { data: session } = useSession();
+	const router = useRouter();
+	console.log(router);
+	const callbackUrl = router.query.from ? router.query.from : "/dashboard";
+	console.log(callbackUrl);
 
 	if (session) {
 		return (
@@ -27,6 +32,7 @@ const Login = ({ providers }) => {
 			<Layout>
 				<div className="layout h-screen flex flex-col justify-center items-center content-center">
 					<div className="flex flex-col items-center gap-4">
+						{/* Render out all OAuth Providers for user to log in. Redirect to dashboard after successful log in. OAuth option prompts for log in every time. */}
 						{Object.values(providers).map((provider) => (
 							<div key={provider.name}>
 								<button
@@ -35,7 +41,7 @@ const Login = ({ providers }) => {
 										signIn(
 											provider.id,
 											{
-												callbackUrl: `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/dashboard`,
+												callbackUrl: `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}${callbackUrl}`,
 											},
 											{ prompt: "login" }
 										)

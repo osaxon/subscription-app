@@ -10,13 +10,21 @@ export const SUBSCRIPTION_IDS = {
 	STRIPE_YEARLY_SUB_ID: process.env.NEXT_PUBLIC_STRIPE_YEARLY_SUB_ID,
 	STRIPE_MONTHLY_SUB_ID: process.env.NEXT_PUBLIC_STRIPE_MONTHLY_SUB_ID,
 };
-export const DASHBOARD_MENU = ["Overview", "My Lesson Plans"];
+export const DASHBOARD_MENU = ["Overview", "My Lesson Plans", "Account"];
 
 export const PROCESS_STEPS = ["Register", "Choose plan", "Go!"];
 
 export const PRODUCTS = [
 	{
-		name: "MONTHLY",
+		name: "Basic - Free",
+		priceId: "FREE-TIER",
+		highlights: ["Access to free content", "Upgrade any time"],
+		badge: "Free",
+		price: 0,
+		per: "N/A",
+	},
+	{
+		name: "Premium - Monthly",
 		priceId: process.env.NEXT_PUBLIC_STRIPE_MONTHLY_SUB_ID,
 		highlights: ["14 day free trial", "Cancel any time"],
 		badge: "Most flexible",
@@ -24,7 +32,7 @@ export const PRODUCTS = [
 		per: "Month",
 	},
 	{
-		name: "YEARLY",
+		name: "Premium - Yearly",
 		priceId: process.env.NEXT_PUBLIC_STRIPE_YEARLY_SUB_ID,
 		highlights: ["Equiv to £3.50 p/m", "Full access for 12 months"],
 		badge: "Most savings",

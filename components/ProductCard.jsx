@@ -1,7 +1,20 @@
 import React from "react";
 import { goToCheckout } from "../utils";
 
-const ProductCard = ({ badge, name, highlights, disabled, price, per }) => {
+const handleClick = (e, option) => {
+	e.preventDefault();
+
+	if (option === "FREE-TIER") {
+		console.log("Handle cancel / switch");
+		console.log(option);
+	} else {
+		console.log("Create checkout");
+		console.log(option);
+	}
+	//goToCheckout(option)
+};
+
+const ProductCard = ({ badge, name, highlights, disabled, price, per, id }) => {
 	return (
 		<div className="w-full bg-base-100 shadow-xl">
 			<div className="h-48 flex flex-col justify-evenly items-center">
@@ -19,7 +32,7 @@ const ProductCard = ({ badge, name, highlights, disabled, price, per }) => {
 			</div>
 			<div className="card-body relative">
 				<button
-					onClick={() => goToCheckout({ name })}
+					onClick={(e) => handleClick(e, id)}
 					className="btn btn-secondary"
 					disabled={disabled}
 				>

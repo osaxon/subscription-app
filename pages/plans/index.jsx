@@ -1,13 +1,30 @@
 import React, { useEffect, useState, useCallback } from "react";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 import uniq from "lodash/uniq";
-
+import { useRouter } from "next/router";
 import { gql } from "@apollo/client";
 import { Layout } from "../../components";
 import client from "../../lib/apolloClient";
+import PlanCard from "../../components/PlanCard";
+import axios from "axios";
+import useSWR from "swr";
 
 const Plans = ({ plans, tags }) => {
 	const [filteredPlans, setFilteredPlans] = useState(() => [...plans]);
 	const [selectedTags, setSelectedTags] = useState([]);
+	const { data: session, status } = useSession();
+	const router = useRouter();
+
+	const fetcher = (url) =>
+		axios
+			.get(url, { params: { id: session.user.id } })
+			.then((res) => res.data);
+	// Fetch user data from DB
+	const { data, error, isValidating } = useSWR(
+		"/api/user/get-user-details",
+		fetcher
+	);
 
 	const checkSelectedTag = useCallback(
 		(tag) => {
@@ -59,6 +76,16 @@ const Plans = ({ plans, tags }) => {
 		}
 	}, [selectedTags, filterPlans, plans]);
 
+	if (status === "unauthenticated") {
+		router.push({
+			pathname: "/login",
+			query: { from: router.pathname },
+		});
+	}
+	if (isValidating) {
+		return <div>Loading</div>;
+	}
+
 	return (
 		<Layout>
 			<main className="w-11/12 mx-auto px-2">
@@ -68,6 +95,7 @@ const Plans = ({ plans, tags }) => {
 						tags.map((tag) => (
 							<li key={tag}>
 								<button
+									value={tag}
 									aria-disabled={checkSelectedTag(tag)}
 									onClick={(e) => handleClick(e)}
 									className="btn btn-secondary btn-sm"
@@ -80,7 +108,7 @@ const Plans = ({ plans, tags }) => {
 				<ul className="mt-12 grid gap-1 md:grid-cols-2 xl:grid-cols-3">
 					{filteredPlans.map((plan) => (
 						<li key={plan.slug}>
-							<p className="h-48">{plan.name}</p>
+							<PlanCard user={data} plan={plan} />
 						</li>
 					))}
 				</ul>
@@ -94,8 +122,17 @@ export async function getStaticProps() {
 		query: gql`
 			query Plans {
 				plans {
+					createdAt
+					description
+					content {
+						html
+					}
 					id
 					name
+					publishedAt
+					updatedAt
+					level
+					availability
 					tags
 					slug
 				}

@@ -19,7 +19,7 @@ const handler = async (req, res) => {
 			},
 		});
 	}
-	const subType = req.body.subType;
+	const priceId = req.body.priceId;
 	console.log(subType);
 
 	// New subscription
@@ -34,7 +34,7 @@ const handler = async (req, res) => {
 		},
 		line_items: [
 			{
-				price: SUBSCRIPTION_IDS[`STRIPE_${subType}_SUB_ID`],
+				price: priceId,
 				quantity: 1,
 			},
 		],
