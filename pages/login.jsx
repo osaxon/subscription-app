@@ -1,6 +1,5 @@
 import React from "react";
-import { useSession, signIn, signOut, getProviders } from "next-auth/react";
-import Image from "next/future/image";
+import { signIn, getProviders } from "next-auth/react";
 import Layout from "../components/Layout";
 
 const Login = ({ providers }) => {
@@ -9,7 +8,7 @@ const Login = ({ providers }) => {
 			<div className="layout h-screen flex flex-col justify-center items-center content-center">
 				<div className="flex flex-col items-center gap-4">
 					{/* Render out all OAuth Providers for user to log in. Redirect to dashboard after successful log in. OAuth option prompts for log in every time. */}
-					{Object.values(providers).map((provider) => (
+					{/* {Object.values(providers).map((provider) => (
 						<div key={provider.name}>
 							<button
 								className="link"
@@ -20,7 +19,10 @@ const Login = ({ providers }) => {
 								Sign in with {provider.name}
 							</button>
 						</div>
-					))}
+					))} */}
+					<button onClick={signIn("google")}>
+						Sign In with Google
+					</button>
 				</div>
 			</div>
 		</Layout>
