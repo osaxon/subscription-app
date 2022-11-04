@@ -24,7 +24,7 @@ export default function Home({ session }) {
 							advanced.
 						</p>
 					</div>
-					<Link href="/login">
+					<Link href="/api/auth/signin">
 						<a className="btn w-full sm:btn-wide btn-secondary">
 							Sign up
 						</a>
