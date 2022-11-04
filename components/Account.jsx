@@ -23,9 +23,7 @@ const Account = ({ user }) => {
 
 	if (error) return <div>there has been an error...</div>;
 	if (isValidating) return <div>loading...</div>;
-
-	const activeSub =
-		data.stripeSubscription.id !== null ? "ACTIVE" : "INACTIVE";
+	console.log(data);
 
 	return (
 		<section className="w-11/12 px-2 mx-auto h-full max-w-6xl">
@@ -45,7 +43,9 @@ const Account = ({ user }) => {
 						<p className="inline-flex items-center w-full justify-between">
 							Subscription status:&nbsp;
 							<span className="badge">
-								{data.stripeSubscription.status}
+								{data.stripeSubscription?.status
+									? data.stripeSubscription?.status
+									: "NONE"}
 							</span>
 						</p>
 						<p className="inline-flex items-center w-full justify-between">
@@ -57,7 +57,8 @@ const Account = ({ user }) => {
 						</p>
 
 						<div className="flex gap-2">
-							{activeSub === "ACTIVE" && !cancelSelected ? (
+							{data.stripeSubscription !== null &&
+							!cancelSelected ? (
 								<button
 									onClick={(e) => handleCancel(e)}
 									className="btn btn-error btn-sm"

@@ -20,7 +20,6 @@ const handler = async (req, res) => {
 		});
 	}
 	const priceId = req.body.priceId;
-	console.log(subType);
 
 	// New subscription
 	const checkoutSession = await stripe.checkout.sessions.create({

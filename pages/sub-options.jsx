@@ -7,7 +7,7 @@ import { prisma } from "../prisma/shared-client";
 
 const SubOptions = ({ user, session = true }) => {
 	const checkCurrentSub = (priceId) => {
-		return priceId === user.stripeSubscription.plan.id;
+		return priceId === user.stripeSubscription?.plan.id;
 	};
 
 	if (!session) {

@@ -11,7 +11,7 @@ const handleClick = (e, option) => {
 		console.log("Create checkout");
 		console.log(option);
 	}
-	//goToCheckout(option)
+	goToCheckout(option);
 };
 
 const ProductCard = ({ badge, name, highlights, disabled, price, per, id }) => {
