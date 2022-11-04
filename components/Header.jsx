@@ -59,12 +59,7 @@ const Header = () => {
 					</div>
 				) : (
 					<button
-						onClick={() =>
-							signIn(null, {
-								callbackUrl:
-									process.env.NEXT_PUBLIC_LOGIN_REDIRECT_URL,
-							})
-						}
+						onClick={() => signIn()}
 						className="btn btn-primary"
 					>
 						Sign in
