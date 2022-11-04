@@ -50,10 +50,10 @@ const Account = ({ user }) => {
 						</p>
 						<p className="inline-flex items-center w-full justify-between">
 							Plan:{" "}
-							{data.stripeSubPlan ? data.stripeSubPlan : "NONE"}{" "}
-							<button className="badge badge-success">
-								<Link href="/sub-options">edit</Link>
-							</button>
+							{data.stripeSubPlan ? data.stripeSubPlan : "NONE"}
+							<Link href="/sub-options">
+								<a className="badge badge-warning">edit</a>
+							</Link>
 						</p>
 
 						<div className="flex gap-2">

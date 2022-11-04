@@ -7,12 +7,14 @@ import Link from "next/link";
 export default function Home({ session }) {
 	return (
 		<Layout>
-			<main className="min-h-screen container flex flex-col justify-evenly border border-primary">
-				<h1 className="text-5xl text-neutral px-1">
-					Welcome to Web Jenga.
+			<main className="min-h-screen container flex flex-col justify-evenly border border-success border-opacity-40">
+				<h1 className="text-5xl text-primary-content px-1">
+					Welcome to
+					<span className="text-primary"> Web</span>
+					<span className="text-accent">Jenga.</span>
 				</h1>
 				<section className="flex flex-col items-start gap-8">
-					<div className="prose prose-2xl">
+					<div className="prose text-primary-content prose-2xl">
 						<p>
 							Connect with students and mentors in the tech
 							industry.
@@ -22,16 +24,11 @@ export default function Home({ session }) {
 							advanced.
 						</p>
 					</div>
-					<div className="flex gap-4">
-						<Link href="/get-started">
-							<a className="btn btn-wide btn-secondary">
-								Get Started
-							</a>
-						</Link>
-						<Link href="/login">
-							<a className="btn btn-wide btn-neutral">Login</a>
-						</Link>
-					</div>
+					<Link href="/login">
+						<a className="btn w-full sm:btn-wide btn-secondary">
+							Sign up
+						</a>
+					</Link>
 				</section>
 			</main>
 		</Layout>

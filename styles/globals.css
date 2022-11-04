@@ -11,3 +11,7 @@
 .container {
 	@apply w-11/12 px-2 mx-auto max-w-6xl;
 }
+
+.btn {
+	@apply rounded-sm;
+}
