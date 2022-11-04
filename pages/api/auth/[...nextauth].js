@@ -17,9 +17,6 @@ export default NextAuth({
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET,
 		}),
 	],
-	pages: {
-		signIn: "/login",
-	},
 	secret: process.env.JWT_SECRET,
 	adapter: PrismaAdapter(prisma),
 	callbacks: {

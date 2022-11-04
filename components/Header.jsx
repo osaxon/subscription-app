@@ -1,6 +1,5 @@
 import React from "react";
-import { useSession, signOut, signIn } from "next-auth/react";
-import Image from "next/future/image";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { HEADER_NAV } from "../config";
 import NavItem from "./Elements/NavItem";
@@ -13,6 +12,11 @@ const Header = () => {
 	return (
 		<div className="navbar bg-base-100 container">
 			<div className="navbar-start">
+				<Link href="/">
+					<a className="text-primary text-3xl">
+						Web<span className="text-accent">Jenga.</span>
+					</a>
+				</Link>
 				{/* Mobile nav */}
 				<div className="dropdown">
 					<label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -54,11 +58,6 @@ const Header = () => {
 							})}
 					</ul>
 				</div>
-				<Link href="/">
-					<a className="text-primary text-3xl">
-						Web<span className="text-accent">Jenga.</span>
-					</a>
-				</Link>
 			</div>
 			<div className="navbar-center hidden lg:flex">
 				<ul className="menu menu-horizontal p-0">
@@ -81,19 +80,22 @@ const Header = () => {
 						})}
 				</ul>
 			</div>
-			<div className="navbar-end  gap-4">
+			<div className="navbar-end">
 				{status === "unauthenticated" ? (
-					<>
-						<button onClick={() => signIn()} className="link">
-							Sign in
-						</button>
-						<button
-							onClick={() => signIn()}
-							className="btn btn-success min-h-8 h-8"
-						>
-							Sign up
-						</button>
-					</>
+					<ul className="flex gap-4 content-center items-center">
+						<li className="hidden md:inline-flex">
+							<Link href="/api/auth/signin">
+								<a className="link link-success ">Sign in</a>
+							</Link>
+						</li>
+						<li>
+							<Link href="/api/auth/signin">
+								<a className="btn btn-success min-h-8 h-8">
+									Sign up
+								</a>
+							</Link>
+						</li>
+					</ul>
 				) : (
 					<Avatar image={session?.user.image} />
 				)}
