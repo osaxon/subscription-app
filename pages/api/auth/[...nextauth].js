@@ -22,19 +22,19 @@ export default NextAuth({
 	callbacks: {
 		async session({ session, user }) {
 			const stripeSubTier = getStripeSubTier(user.stripeSubPriceId);
-
 			const dbUser = await prisma.user.findFirst({
 				where: {
 					id: user.id,
 				},
 			});
-
 			session.user.id = user.id;
 			session.user.stripeCustomerId = user.stripeCustomerId;
 			session.user.stripeSubTier = stripeSubTier;
-
 			return session;
 		},
+	},
+	pages: {
+		signIn: "/auth/signin",
 	},
 	events: {
 		createUser: async ({ user }) => {

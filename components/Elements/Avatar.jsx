@@ -1,6 +1,9 @@
 import Image from "next/future/image";
 
 const Avatar = ({ image }) => {
+	if (!image) {
+		return null;
+	}
 	return (
 		<div className="avatar">
 			<div className="mask w-12 mask-hexagon">

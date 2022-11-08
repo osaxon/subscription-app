@@ -1,10 +1,11 @@
-import { getSession } from "next-auth/react";
+import { getSession, signIn, signOut } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Layout from "../components/Layout";
 import Link from "next/link";
 
 export default function Home({ session }) {
+	console.log(session);
 	return (
 		<Layout>
 			<main className="min-h-screen container flex flex-col justify-evenly border border-success border-opacity-40">
@@ -24,11 +25,12 @@ export default function Home({ session }) {
 							advanced.
 						</p>
 					</div>
-					<Link href="/api/auth/signin">
-						<a className="btn w-full sm:btn-wide btn-secondary">
-							Sign up
-						</a>
-					</Link>
+					<button
+						className="btn btn-accent btn-wide"
+						onClick={signIn}
+					>
+						Sign In
+					</button>
 				</section>
 			</main>
 		</Layout>
@@ -38,14 +40,14 @@ export default function Home({ session }) {
 export async function getServerSideProps(context) {
 	const session = await getSession(context);
 
-	// Redirect to dashboard if user is logged in already
-	if (session) {
-		return {
-			redirect: {
-				destination: "/dashboard",
-			},
-		};
-	}
+	// // Redirect to dashboard if user is logged in already
+	// if (session) {
+	// 	return {
+	// 		redirect: {
+	// 			destination: "/dashboard",
+	// 		},
+	// 	};
+	// }
 
 	return {
 		props: { session },
