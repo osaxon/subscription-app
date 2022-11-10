@@ -17,8 +17,6 @@ const PlanCard = ({ plan, user }) => {
 		tags,
 	} = plan;
 
-	console.log(user);
-
 	return (
 		<div className="h-96 border border-secondary p-4 flex flex-col justify-between shadow relative">
 			<div className=" h-full flex flex-col justify-between">
@@ -39,11 +37,16 @@ const PlanCard = ({ plan, user }) => {
 						</div>
 					</div>
 				) : (
-					<Link href={`/plans/${slug}`}>
-						<button className="btn btn-wide btn-secondary mx-auto">
-							View Lesson
+					<>
+						<Link href={`/plans/${slug}`}>
+							<button className="btn btn-wide btn-secondary mx-auto">
+								View Lesson
+							</button>
+						</Link>
+						<button onClick={() => console.log(id)}>
+							Add Lesson
 						</button>
-					</Link>
+					</>
 				)}
 
 				<div className="flex gap-2">

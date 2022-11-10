@@ -4,7 +4,6 @@ import Stripe from "stripe";
 
 export const handler = async (req, res) => {
 	const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-	console.log(req.query.id);
 
 	const session = await getSession({ req });
 

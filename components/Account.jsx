@@ -23,7 +23,6 @@ const Account = ({ user }) => {
 
 	if (error) return <div>there has been an error...</div>;
 	if (isValidating) return <div>loading...</div>;
-	console.log(data);
 
 	return (
 		<section className="w-11/12 px-2 mx-auto h-full max-w-6xl">

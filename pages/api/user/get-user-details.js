@@ -3,7 +3,6 @@ import { prisma } from "../../../prisma/shared-client";
 
 export const handler = async (req, res) => {
 	const session = await getSession({ req });
-	console.log(req.query);
 
 	if (!session?.user) {
 		return res.status(401).json({
@@ -19,7 +18,6 @@ export const handler = async (req, res) => {
 			id: req.query.id,
 		},
 	});
-	console.log(user);
 	return res.status(200).json(user);
 };
 

@@ -7,7 +7,7 @@ generator client {
 }
 
 datasource db {
-  provider             = "mysql"
+  provider             = "postgresql"
   url                  = env("DATABASE_URL")
   referentialIntegrity = "prisma"
 }
@@ -45,6 +45,7 @@ model User {
   email               String?   @unique
   emailVerified       DateTime?
   image               String?
+  role                Role      @default(TEACHER)
   accounts            Account[]
   sessions            Session[]
   stripeCustomerId    String?   @unique
@@ -63,6 +64,12 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+enum Role {
+  STUDENT
+  TEACHER
+  ADMIN
 }
 
 // model Lesson {

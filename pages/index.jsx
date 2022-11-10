@@ -5,10 +5,9 @@ import Layout from "../components/Layout";
 import Link from "next/link";
 
 export default function Home({ session }) {
-	console.log(session);
 	return (
 		<Layout>
-			<main className="min-h-screen container flex flex-col justify-evenly border border-success border-opacity-40">
+			<main className="min-h-screen container flex flex-col justify-evenly">
 				<h1 className="text-5xl text-primary-content px-1">
 					Welcome to
 					<span className="text-primary"> Web</span>
@@ -27,7 +26,7 @@ export default function Home({ session }) {
 					</div>
 					<button
 						className="btn btn-accent btn-wide"
-						onClick={signIn}
+						onClick={() => signIn(null, { role: "STUDENT" })}
 					>
 						Sign In
 					</button>
@@ -39,15 +38,6 @@ export default function Home({ session }) {
 
 export async function getServerSideProps(context) {
 	const session = await getSession(context);
-
-	// // Redirect to dashboard if user is logged in already
-	// if (session) {
-	// 	return {
-	// 		redirect: {
-	// 			destination: "/dashboard",
-	// 		},
-	// 	};
-	// }
 
 	return {
 		props: { session },

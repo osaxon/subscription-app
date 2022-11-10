@@ -13,8 +13,8 @@ export const SUBSCRIPTION_IDS = {
 export const DASHBOARD_MENU = ["Overview", "My Lesson Plans", "Account"];
 export const HEADER_NAV = [
 	{
-		name: "Free Lessons",
-		href: "/free-lessons",
+		name: "Pricing",
+		href: "/pricing",
 		parent: false,
 	},
 	{
@@ -22,21 +22,21 @@ export const HEADER_NAV = [
 		href: "/about",
 		parent: false,
 	},
-	{
-		name: "Connect",
-		href: "/connect",
-		parent: true,
-		submenu: [
-			{
-				name: "Tutors",
-				href: "/connect/tutors",
-			},
-			{
-				name: "Students",
-				href: "/connect/students",
-			},
-		],
-	},
+	// {
+	// 	name: "Lessons",
+	// 	href: "/lessons",
+	// 	parent: true,
+	// 	submenu: [
+	// 		{
+	// 			name: "",
+	// 			href: "/connect/tutors",
+	// 		},
+	// 		{
+	// 			name: "Students",
+	// 			href: "/connect/students",
+	// 		},
+	// 	],
+	// },
 ];
 export const PROCESS_STEPS = ["Register", "Choose plan", "Go!"];
 

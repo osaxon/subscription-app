@@ -12,14 +12,12 @@ const Header = () => {
 	return (
 		<div className="navbar bg-base-100 container">
 			<div className="navbar-start">
-				<Link href="/">
-					<a className="text-primary text-3xl">
-						Web<span className="text-accent">Jenga.</span>
-					</a>
-				</Link>
 				{/* Mobile nav */}
 				<div className="dropdown">
-					<label tabIndex={0} className="btn btn-ghost lg:hidden">
+					<label
+						tabIndex={0}
+						className="btn px-0 btn-ghost lg:hidden"
+					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							className="h-5 w-5"
@@ -58,6 +56,11 @@ const Header = () => {
 							})}
 					</ul>
 				</div>
+				<Link href="/">
+					<a className="text-primary text-3xl">
+						Web<span className="text-accent">Jenga.</span>
+					</a>
+				</Link>
 			</div>
 			<div className="navbar-center hidden lg:flex">
 				<ul className="menu menu-horizontal p-0">
